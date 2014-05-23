@@ -555,7 +555,10 @@ class Routes
                 $name = $prop->getName();
                 $child = array('name' => $name);
                 if ($c = $prop->getDocComment()) {
-                    $child += Util::nestedValue(CommentParser::parse($c), 'var');
+                    $parsed = Util::nestedValue(CommentParser::parse($c), 'var');
+                    if (is_array($parsed)) {
+                        $child += $parsed;
+                    }
                 } else {
                     $o = $class->newInstance();
                     $p = $prop->getValue($o);
